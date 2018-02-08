@@ -57,12 +57,12 @@ def initialize() {
     	if (switchType == "On/Off Button Tile") {
 	    	def childDevice = addChildDevice("smartthings", "On/Off Button Tile", deviceId, null, [label: switchLabel])           
 	    } else if (switchType == "Momentary Button Tile") {
-			def childDevice = addChildDevice("smartthings", "Momentary Button Tile", deviceId, null, [label: switchLabel])    
+		def childDevice = addChildDevice("smartthings", "Momentary Button Tile", deviceId, null, [label: switchLabel])    
 	    } else if (switchType == "Dimmer Switch") {
-			def childDevice = addChildDevice("MichaelStruck", "Virtual Dimmer", deviceId, null, [label: switchLabel])    
+		def childDevice = addChildDevice("smartthings", "Simulated Dimmer Switch", deviceId, null, [label: switchLabel])    
 	    } else if (switchType == "Simulated Presence Sensor") {
-			def childDevice = addChildDevice("infofiend", "Simulated Presence Sensor", deviceId, null, [label: switchLabel])    
-		}
+		def childDevice = addChildDevice("smartthings", "Simulated Presence Sensor", deviceId, null, [label: switchLabel])    
+	    }
 	}
 }
 
