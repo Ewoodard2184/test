@@ -14,3 +14,4 @@ SwitchMania - is the parent app.  It controls 2 types of child apps:
 (2) 'My Switch Calls Routines App' - links any switch with a Routine when a switch is turned on or off.
 
 You need to install all 3 apps in the IDE you only need to publish the main app Switch Mania
+You will also need to install the included device handlers if not already installed
