@@ -14,7 +14,7 @@
  *
  */
 metadata {
-    definition (name: "Simulated Dimmer Switch", namespace: "smartthings/testing", author: "SmartThings", runLocally: false) {
+    definition (name: "Simulated Dimmer Switch", namespace: "smartthings", author: "SmartThings", runLocally: false) {
         capability "Actuator"
         capability "Sensor"
 
