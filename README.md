@@ -6,6 +6,7 @@ SmartThings SwitchMania-related Apps & Devices
 SwitchMania - is the parent app.  It controls 2 types of child apps:  
 
 (1) 'My Virtual Switch Creator' - it can now create 4 different types of virtual switches:
+
       (i) on/off switches
       (ii) momentary switches
       (iii) dimmer switches
