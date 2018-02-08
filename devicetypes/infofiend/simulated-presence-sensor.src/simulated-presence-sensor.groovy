@@ -1,31 +1,35 @@
-/*  Simulated Presence Sensor 
+/**
+ *  Copyright 2014 SmartThings
  *
- * Taken from SmartThings base code, enhanced and bugfixed by RBoy
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ *  in compliance with the License. You may obtain a copy of the License at:
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
+ *  for the specific language governing permissions and limitations under the License.
  *
  */
-
- metadata {
+metadata {
 	// Automatically generated. Make future change here.
-	definition (name: "Simulated Presence Sensor", namespace: "infofiend", author: "smartthings") {
+	definition (name: "Simulated Presence Sensor", namespace: "smartthings/testing", author: "bob") {
 		capability "Presence Sensor"
 		capability "Sensor"
-		capability "Actuator"
 
 		command "arrived"
 		command "departed"
-        command "away"
-        command "present"
 	}
 
 	simulator {
-		status "present": "presence: 1"
-		status "not present": "presence: 0"
+		status "present": "presence: present"
+		status "not present": "presence: not present"
 	}
 
 	tiles {
-		standardTile("presence", "device.presence", width: 2, height: 2, canChangeBackground: true, inactiveLabel: false, canChangeIcon: true) {
-			state("present", label:'${name}', icon:"st.presence.tile.mobile-present", action:"departed", backgroundColor:"#53a7c0")
-			state("not present", label:'${name}', icon:"st.presence.tile.mobile-not-present", action:"arrived", backgroundColor:"#CCCC00")
+		standardTile("presence", "device.presence", width: 2, height: 2, canChangeBackground: true) {
+			state("not present", label:'not present', icon:"st.presence.tile.not-present", backgroundColor:"#ffffff", action:"arrived")
+			state("present", label:'present', icon:"st.presence.tile.present", backgroundColor:"#00A0DC", action:"departed")
 		}
 		main "presence"
 		details "presence"
@@ -33,63 +37,9 @@
 }
 
 def parse(String description) {
-	def name = parseName(description)
-	def value = parseValue(description)
-	def linkText = getLinkText(device)
-	def descriptionText = parseDescriptionText(linkText, value, description)
-	def handlerName = getState(value)
-	def isStateChange = isStateChange(device, name, value)
-
-	def results = [
-		name: name,
-		value: value,
-		unit: null,
-		linkText: linkText,
-		descriptionText: descriptionText,
-		handlerName: handlerName,
-		isStateChange: isStateChange,
-		displayed: displayed(description, isStateChange)
-	]
-	log.debug "Parse returned $results.descriptionText"
-	return results
-
+	def pair = description.split(":")
+	createEvent(name: pair[0].trim(), value: pair[1].trim())
 }
-
-private String parseName(String description) {
-	if (description?.startsWith("presence: ")) {
-		return "presence"
-	}
-	null
-}
-
-private String parseValue(String description) {
-	switch(description) {
-		case "presence: 1": return "arrived"
-		case "presence: 0": return "departed"
-        
-		default: return description
-	}
-}
-
-private parseDescriptionText(String linkText, String value, String description) {
-	switch(value) {
-		case "present": return "$linkText has arrived"
-		case "not present": return "$linkText has departed"
-        case "arrived": return "$linkText has arrived"
-		case "departed": return "$linkText has departed"
-		default: return value
-	}
-}
-
-private getState(String value) {
-	switch(value) {
-		case "present": return "arrived"
-		case "not present": return "departed"
-		default: return value
-	}
-}
-
-
 
 // handle commands
 def arrived() {
@@ -99,16 +49,6 @@ def arrived() {
 
 
 def departed() {
-	log.trace "Executing 'Departed'"
+	log.trace "Executing 'departed'"
 	sendEvent(name: "presence", value: "not present")
-}
-
-def away() {
-	log.trace "Executing 'Away'"
-	sendEvent(name: 'presence', value: 'not present')
-}
-
-def present() {
-	log.trace "Executing 'Presence'"
-	sendEvent(name: 'presence', value: 'present')
 }
